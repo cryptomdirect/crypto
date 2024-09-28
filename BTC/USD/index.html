@@ -12,7 +12,7 @@
  		<div id="source">
  			Courses from API cryptocompare.com<br/>
  			Refresh every 10s<br/>
- 			More information on bitcoin : <a href="https://www.cryptocompare.com/coins/btc/overview/EUR">https://www.cryptocompare.com/coins/btc/overview/EUR</a>
+ 			More information on bitcoin : <a href="https://www.cryptocompare.com/coins/btc/overview/USD">https://www.cryptocompare.com/coins/btc/overview/EUR</a>
 		</div><br/><br/><br/>
 		<div id="buy" onclick="openPopup('https://bitcoin.org/en/buy'); return false;"><h2>Buy Bitcoin on bitcoin.org</h2></div>
  		
@@ -40,7 +40,7 @@
  	 	 	 		var eur=formatMontant(json.USD); 	
  	 	 	 		var dt=new Date();
  	 	 	 		document.getElementById("cours").innerHTML=usd+" &dollar;";
- 	 	 	 		document.querySelector("div#horo").innerHTML="Maj "+dt.toLocaleString();
+ 	 	 	 		document.querySelector("div#horo").innerHTML="Upd "+dt.toLocaleString();
  	 	 		} else {
  	 	 	 		console.log("Retour du cours incorrect"); 	
  	 	 		}
