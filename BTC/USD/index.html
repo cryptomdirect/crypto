@@ -35,9 +35,9 @@
 			console.log("Retour JSON incorrect"); 	
 			return false; 	
 	 		}
-	 		/* Vérifier que le JSON de retour contient bien la propriété USD */
+	 		/* Vérifier que le JSON de retour contient bien la propriété EUR */
 	 		if (json.USD) {
- 	 	 	 		var USD=formatMontant(json.USD); 	
+ 	 	 	 		var eur=formatMontant(json.USD); 	
  	 	 	 		var dt=new Date();
  	 	 	 		document.getElementById("cours").innerHTML=usd+" &dollar;";
  	 	 	 		document.querySelector("div#horo").innerHTML="Upd "+dt.toLocaleString();
