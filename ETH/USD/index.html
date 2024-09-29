@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+ 		<title>Real-time Ethereum prices</title>
+ 		<link rel="icon" href="https://bitcoin.org/favicon.png">
+	</head>
+	<body>
+		<img src="https://bitcoin.org/img/icons/logotop.svg" alt="logo" id="logo" onclick="openPopup('https://bitcoin.org/en/'); return false;">
+ 		<h1 id="h1"><u>Real-time Ethereum prices :</u></h1><br/>
+ 		<div id="bitcoin"><div id="cours"></div><div id="horo"></div></div>
+ 		<div id="source">
+ 			Courses from API cryptocompare.com<br/>
+ 			Refresh every 10s<br/>
+ 			More information on ethereum : <a href="https://www.cryptocompare.com/coins/eth/overview/USD">https://www.cryptocompare.com/coins/eth/overview/USD</a>
+		</div><br/><br/><br/>
+		<div id="buy" onclick="openPopup('https://bitcoin.org/en/buy'); return false;"><h2>Buy Ethereum on bitcoin.org</h2></div>
+ 		
+	<script type="text/javascript">
+	function formatMontant(m) {
+ 		var intlN=new Intl.NumberFormat();
+ 		return intlN.format(m);
+	}
+	/* Récupération des données de cours de l'Ethereum */
+	function getCours() {
+ 		/* Appel AJAX vers cryptocompare.com */
+ 		var ajax=new XMLHttpRequest();	
+ 		/* Détection de la fin de l'appel */
+ 		ajax.onload = function() {
+		console.log("Appel AJAX terminé");	
+ 	 		if (this.status == 200) { /* Le service a bien répondu */
+ 	 	 		try {
+	 	 		var json=JSON.parse(this.response); // Convertir le retour JSON
+	 		} catch(err) {
+			console.log("Retour JSON incorrect"); 	
+			return false; 	
+	 		}
+	 		/* Vérifier que le JSON de retour contient bien la propriété EUR */
+	 		if (json.USD) {
+ 	 	 	 		var usd=formatMontant(json.USD); 	
+ 	 	 	 		var dt=new Date();
+ 	 	 	 		document.getElementById("cours").innerHTML=usd+" &dollar;";
+ 	 	 	 		document.querySelector("div#horo").innerHTML="Upd "+dt.toLocaleString();
+ 	 	 		} else {
+ 	 	 	 		console.log("Retour du cours incorrect"); 	
+ 	 	 		}
+ 	 		}
+ 		}
+ 		/* Détection du timeout */
+ 		ajax.ontimeout=function() {
+ 	 		/* Relancer l'appel 0.1 secondes plus tard */
+ 	 		setTimeout("getCours()", 100); 
+ 		}
+ 	 		
+ 		/* Préparation de la requête et envoi */
+ 		var url="https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD";
+ 		ajax.open("GET", url, true);
+ 		ajax.timeout=1000; /* Délai d'expiration à 1 seconde */
+ 		ajax.send();
+	}
+	/* Démarrage de l'appel */
+	window.onload=function() {
+ 		getCours();
+ 		setInterval("getCours()", 10000);
+	}
+	var windowObjectReference;
+	function openPopup(url) {
+		windowObjectReference = window.open(url,"WindowName","popup",);
+	}
+	</script>
+	</body>
+	<style type="text/css">
+ 		html {
+ 			width:50%;
+ 			margin-left:25%;
+ 			margin-top:2em;
+ 		}
+ 		div#bitcoin {
+ 	 		margin: 5px;
+ 	 		padding: 5px;
+ 	 		font-size: 30px;
+ 	 		line-height: 60px;
+ 	 		min-height:60px;
+ 	 		font-weight: bold;
+ 	 		border:1px solid #ccc;
+ 	 		border-radius:5px;
+ 	 		width:250px;
+ 	 		margin-left:auto;
+ 	 		margin-right:auto;
+ 	 		padding-top:0px;
+ 	 		text-align: center;
+ 	 		position: relative;
+ 		}
+ 		h1 {
+ 			font-family:Arial;
+ 		}
+ 		div#horo {
+ 	 		position:absolute;
+ 	 		right:5px;
+ 	 		bottom:-21px;
+ 	 		font-size: 12px;
+ 		}
+ 		div#source {
+ 	 		font-size:12px;
+ 	 		color:#999;
+ 	 		margin-top:10em;
+ 		}
+ 		div#buy {
+ 	 		background-color:#eee;
+ 	 		min-height: 20px;
+ 	 		padding:5px;
+ 	 		margin:10px;
+			text-align:center;
+			border:2px solid #FF9500;
+			color:#FF9500;
+			font-family: "Titillium Web", Arial, sans-serif;
+			cursor:pointer;
+			border-radius: 20px;
+			background-color:#fff;
+ 		}
+		#buy:hover {
+			background-color:#FF9500;
+			color:#fff;
+		}
+		#logo {
+			position: fixed;
+			width:10%;
+			left:0%;
+			top:0%;
+		}
+	</style>
+</html>
